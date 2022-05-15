@@ -81,10 +81,12 @@ app.post('/login', passport.authenticate('local', { failureRedirect: '/login', f
 });
 
 // get todos route
-app.get('/todos', function (req, res) {
-    User.findById(req.user.id,function(User, error){
-        if(error) res.send({});
-        else res.send(User.UserTodos);
+app.get('/todos',isLoggedIn, function (req, res) {
+    User.findById(req.user._id).populate({path:'UserTodos',populate:{
+        path:'todos',
+        model:'Todo'
+    }}).then(function(User){
+        res.send(User.UserTodos);
     })
 })
 
@@ -111,20 +113,20 @@ app.post('/todolist',isLoggedIn, function(req,res){
 })
 
 // add todo to todolist
-app.post('/todolist/todo',isLoggedIn, function(req,res){
+app.post('/todo',isLoggedIn, function(req,res){
     let newTodo = new Todo({title: req.body.title, detail: req.body.detail || "", date:req.body.date || ""});
     newTodo.save(function(err, todo){
-        if(error) res.send({message: "Internal Server Error"});
+        if(err) res.send({message: "Internal Server Error"});
         else{
-            TodoList.findById(req.body.todolistid, function(err, User){
+            TodoList.findById(mongoose.Types.ObjectId(req.body.todolistid), function(err, todoList){
                 if(err) res.send({error:"error saving data"});
                 else{
-                    if(!TodoList.todos)
-                        TodoList.todos = [todo._id];
+                    if(!todoList.todos)
+                        todoList.todos = [todo._id];
                     else
-                        TodoList.todos.push(todo._id);
-                    TodoList.save(function(error,User){
-                        console.log(TodoList);
+                        todoList.todos.push(todo._id);
+                    todoList.save(function(error,todol){
+                        console.log(todol);
                     })
                 }
             })
