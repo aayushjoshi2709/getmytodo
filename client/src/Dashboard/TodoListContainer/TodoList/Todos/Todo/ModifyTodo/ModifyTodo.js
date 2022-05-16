@@ -9,7 +9,6 @@ function ModifyTodo({setGetTodos, setModifyTodos, setShowBlueScreen}) {
           todoListName: TodoListName
         }
         axios.post('/todolist',data,{withCredentials: true}).then((res)=>{
-          console.log(res.status)
           if(res.status ==200) setGetTodos(true);
           setTodoListName('');
         })     

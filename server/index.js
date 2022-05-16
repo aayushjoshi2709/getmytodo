@@ -60,20 +60,11 @@ app.use(expressSession({
     saveUninitialized: true,
 }));
 
-const __dirname = path.resolve();
-
-const reactpath = path.join(__dirname, "../client/build");
-app.use(express.static(reactpath));
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
-
-app.get("/", (req, res) => {
-    res.sendFile(path.join(reactpath, "index.html"));
-});
 
 // add new user
 app.post('/user', function (req, res) {
@@ -144,6 +135,15 @@ app.post('/todo',isLoggedIn, function(req,res){
         }
     })
 })
+
+if(process.env.NODE_ENV === 'production'){
+    const __dirname = path.resolve();
+    const reactpath = path.join(__dirname, "../client/build");
+    app.use(express.static(reactpath));
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(reactpath, "index.html"));
+    });
+}
 
 // function is logged id
 function isLoggedIn(req, res, next) {

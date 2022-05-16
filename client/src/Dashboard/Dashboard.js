@@ -10,7 +10,7 @@ function Dashboard() {
   let navigate = useNavigate();
   useEffect(() => {
     if(GetTodos){
-      axios.get('http://127.0.0.1:3001/todoslists', {withCredentials:true}).then((res) =>{
+      axios.get('/todoslists', {withCredentials:true}).then((res) =>{
       if(res.status === 200){
         setTodoLists(res.data);
       }

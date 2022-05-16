@@ -4,9 +4,9 @@ function Todos({todos, setGetTodos, setShowBlueScreen}) {
   return (
     <>
         {
-              Object.keys(todos).map((keys, idx) => {
+              todos !== undefined ?Object.keys(todos).map((keys, idx) => {
                 return <Todo todo = {todos[idx]} setGetTodos={setGetTodos} setShowBlueScreen={setShowBlueScreen}/>
-              })
+              }):null
         }
     </>
   )

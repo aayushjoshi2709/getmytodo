@@ -1,11 +1,10 @@
-import React,{useState} from 'react'
+ import React,{useState} from 'react'
 import Styles from './Styles';
 import TodoList from './TodoList/TodoList';
 import AddTodoList from './AddTodoList/AddTodoList';
 function TodoListContainer({TodoLists, setGetTodos}) {
   const [ShowAddTodoList, setShowAddTodoList] = useState(false);
   const [ShowBlueScreen, setShowBlueScreen] = useState(false);
-
   return (
     <>
         {
@@ -17,9 +16,10 @@ function TodoListContainer({TodoLists, setGetTodos}) {
         }
         <div style={Styles.TodoListContainer}>
             {
-              Object.keys(TodoLists).map((keys, idx) => {
+              
+              TodoLists !== undefined ?Object.keys(TodoLists).map((keys, idx) => {
                 return <TodoList todoList = {TodoLists[idx]} setGetTodos = {setGetTodos} setShowBlueScreen={setShowBlueScreen}/>
-              })
+              }):''
             }  
         </div>
         <button style={Styles.AddTodoList} onClick= {()=>{setShowAddTodoList(true); setShowBlueScreen(true)}}>
