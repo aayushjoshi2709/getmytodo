@@ -4,11 +4,11 @@ import Styles from './Styles';
 function TodoList() {
   return (
     <div style={Styles.TodoList}>
-        TodoList
+        <h3 style={Styles.Heading}>TodoList</h3>
         <Todos/>
         <div style={Styles.AddTodo}>
-            <input type='text'/>
             <button style={Styles.AddTodoButton}>+</button>
+            <input type='text' style={Styles.AddTodoText} placeholder='Add a Task...'/>
         </div>
     </div>
   )
