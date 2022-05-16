@@ -19,6 +19,8 @@ const Style = {
     TodoText:{
         paddingTop: '8px',
         fontSize: '22px',
+        fontWeight:'100',
+        color:'#1C427E',
         width: 'calc(100% - 80px)',
     },
     TodoEditButton:{

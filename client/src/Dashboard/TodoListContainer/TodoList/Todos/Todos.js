@@ -1,12 +1,13 @@
 import React from 'react'
 import Todo from './Todo/Todo';
-function Todos() {
+function Todos({todos, setGetTodos, setShowBlueScreen}) {
   return (
     <>
-        <Todo/>
-        <Todo/>
-        <Todo/>
-        <Todo/>
+        {
+              Object.keys(todos).map((keys, idx) => {
+                return <Todo todo = {todos[idx]} setGetTodos={setGetTodos} setShowBlueScreen={setShowBlueScreen}/>
+              })
+        }
     </>
   )
 }

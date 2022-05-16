@@ -1,0 +1,20 @@
+{
+  "name": "dailyplanner",
+  "version": "1.0.0",
+  "description": "A dailyplanner for all",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "cd client && npm run build && cd .. && cd server && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaayush27/getmytodo.git"
+  },
+  "author": "Aayush Joshi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jaayush27/getmytodo/issues"
+  },
+  "homepage": "https://github.com/jaayush27/getmytodo#readme"
+}

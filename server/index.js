@@ -6,7 +6,8 @@ import passport from 'passport';
 import PassportLocalMongoose from 'passport-local-mongoose';
 import expressSession from 'express-session';
 import bodyParser from 'body-parser';
-
+import cors from 'cors';
+import path from 'path';
 dotenv.config();
 mongoose.connect(process.env.DB_URL);
 
@@ -14,7 +15,8 @@ mongoose.connect(process.env.DB_URL);
 const TodoSchema = new mongoose.Schema({
     title: String,
     detail: String,
-    date: Date
+    date: Date,
+    completed: Boolean
 });
 const Todo = mongoose.model('Todo', TodoSchema);
 
@@ -47,12 +49,21 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser());
+app.use(cors({
+    origin: "http://127.0.0.1:3000",
+    credentials: true
+}));
 app.use(bodyParser.json());
 app.use(expressSession({
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
 }));
+
+const __dirname = path.resolve();
+
+const reactpath = path.join(__dirname, "../client/build");
+app.use(express.static(reactpath));
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(User.createStrategy());
@@ -60,9 +71,9 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 
-app.get('/', function (req, res) {
-    res.send("hello world")
-})
+app.get("/", (req, res) => {
+    res.sendFile(path.join(reactpath, "index.html"));
+});
 
 // add new user
 app.post('/user', function (req, res) {
@@ -81,12 +92,12 @@ app.post('/login', passport.authenticate('local', { failureRedirect: '/login', f
 });
 
 // get todos route
-app.get('/todos',isLoggedIn, function (req, res) {
+app.get('/todoslists',isLoggedIn, function (req, res) {
     User.findById(req.user._id).populate({path:'UserTodos',populate:{
         path:'todos',
         model:'Todo'
     }}).then(function(User){
-        res.send(User.UserTodos);
+         res.status(200).send(User.UserTodos);
     })
 })
 
@@ -94,17 +105,17 @@ app.get('/todos',isLoggedIn, function (req, res) {
 app.post('/todolist',isLoggedIn, function(req,res){
     let newTodoList = new TodoList({name : req.body.todoListName});
     newTodoList.save(function(err, TodoList){
-        if(err) res.send({message: "Internal Server Error"});
+        if(err) res.status(300).send({message: "Internal Server Error"});
         else{
             User.findById(req.user._id,function(err, User){
-                if(err) res.send({error:"error saving data"});
+                if(err) res.status(300).send({error:"error saving data"});
                 else{
                     if(!User.UserTodos)
                         User.UserTodos = [TodoList._id];
                     else
                         User.UserTodos.push(TodoList._id);
                     User.save(function(error,User){
-                        console.log(User)
+                        res.status(200).send(User);
                     })
                 }
             })
@@ -126,7 +137,7 @@ app.post('/todo',isLoggedIn, function(req,res){
                     else
                         todoList.todos.push(todo._id);
                     todoList.save(function(error,todol){
-                        console.log(todol);
+                        res.status(200).send(todol);
                     })
                 }
             })

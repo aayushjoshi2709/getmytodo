@@ -1,12 +1,24 @@
-import React from 'react'
+import React,{useState} from 'react'
 import Style from './Style'
-function Todo() {
+import ModifyTodo from './ModifyTodo/ModifyTodo';
+function Todo({todo, setGetTodos, setShowBlueScreen}) {
+  const [ModifyTodos, setModifyTodos] = useState(false);
   return (
-    <div style={Style.Todo}>
-      <button style={Style.TodoButton}></button>
-      <span style={Style.TodoText}>Todo </span>
-      <button style={Style.TodoEditButton}><i class="fa-solid fa-pen"></i></button>
-    </div>
+    <>
+      {
+        ModifyTodos? <>
+            <ModifyTodo setGetTodos = {setGetTodos} setModifyTodos={setModifyTodos} setShowBlueScreen={setShowBlueScreen}/>
+          </> :null
+      }
+      <div style={Style.Todo}>
+        <button style={Style.TodoButton}></button>
+        <span style={Style.TodoText}>{todo.title} </span>
+        <button onClick={()=>{
+                              setModifyTodos(true); 
+                              setShowBlueScreen(true)}
+                            } style={Style.TodoEditButton}><i className="fa-solid fa-pen"></i></button>
+      </div>
+    </>
   )
 }
 
