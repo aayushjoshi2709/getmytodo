@@ -7,6 +7,7 @@ function Navbar() {
     
     axios.get(`https://picsum.photos/id/${Math.floor(Math.random()*1000)}/info`).then((res)=>{
       if(res.status === 200){
+        console.log(res.data.download_url)
         setimageUrl(res.data.download_url);
       }
     })
@@ -17,7 +18,7 @@ function Navbar() {
              Tasks Board
         </div>
         <div style={Style.usericoncontainer}>
-             <img style={Style.usericon} src ={imageUrl} onLoad={getUrl()}/>
+             <img style={Style.usericon} src ={imageUrl} onLoad={()=>{getUrl()}}/>
         </div>
     </div>
   )

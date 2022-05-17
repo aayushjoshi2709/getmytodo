@@ -13,7 +13,7 @@ const Styles = {
         color: '#1C427E'
     },
     TextArea:{
-        width:'350px',
+        width:'345px',
         height:'100px',
         outline:'none',
         resize: 'none'

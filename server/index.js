@@ -16,7 +16,7 @@ const TodoSchema = new mongoose.Schema({
     title: String,
     detail: String,
     date: Date,
-    completed: Boolean
+    completed: { type: Boolean, default: false }
 });
 const Todo = mongoose.model('Todo', TodoSchema);
 
@@ -135,6 +135,26 @@ app.post('/todo',isLoggedIn, function(req,res){
         }
     })
 })
+
+app.put('/todo', isLoggedIn, function(req,res){
+    const obj = {
+        title: req.body.title,
+        detail: req.body.detail,
+        completed: req.body.completed,
+        date: req.body.date
+    }
+    Todo.findById(req.body.id, function(err, Todo){
+        if(err) res.status(404).send("user not found");
+        else{
+            Object.assign(Todo, obj);
+            Todo.save(function(err, todo){
+                if(err) console.log(err)
+                else res.status(200).send({"status": "todo updated successfully"});
+            });
+        }
+    })
+})
+
 
 if(process.env.NODE_ENV === 'production'){
     const __dirname = path.resolve();

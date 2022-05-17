@@ -4,9 +4,8 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import axios from "axios";
 import Dashboard from "./Dashboard/Dashboard";
 
+if(process.env.REACT_APP_ENV === 'dev') axios.defaults.baseURL = "http://127.0.0.1:3001"
 function App() {
-
-  axios.defaults.PORT = process.env.REACT_APP_SERVERPORT;
   return ( 
     <Router>
       <Routes>
