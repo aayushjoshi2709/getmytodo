@@ -16,11 +16,16 @@ function TodoList({todoList,setGetTodos, setShowBlueScreen}) {
       })     
     }
   }
+  const handleKeyPress = (event) => {
+    if(event.key === 'Enter'){
+      addTodo();
+    }
+  }
   return (
     <div style={Styles.TodoList}>
         <h3 style={Styles.Heading}>{todoList.name}</h3>
         <div style={Styles.AddTodo}>
-            <button onClick={() => {addTodo()}} style={Styles.AddTodoButton}>+</button>
+            <button onKeyPress={(e) => {handleKeyPress(e)}} onClick={() => {addTodo()}} style={Styles.AddTodoButton}>+</button>
             <input type='text' value={Task} onChange={(e) =>{ setTask(e.target.value)}} style={Styles.AddTodoText} placeholder='Add a Task...'/>
         </div>
         <Todos todos = {todoList.todos} setGetTodos={setGetTodos} setShowBlueScreen={setShowBlueScreen}/>

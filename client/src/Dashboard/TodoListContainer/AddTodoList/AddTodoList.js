@@ -14,10 +14,15 @@ function AddTodoList({setGetTodos}) {
       })     
     }
   }
+  const handleKeyPress = (event) => {
+    if(event.key === 'Enter'){
+      addTodoList();
+    }
+  }
   return (
     <div style = {Styles.AddTodoListDiv}>
                 <input onChange={(e) => {setTodoListName(e.target.value)}} value={TodoListName} type='text' style={Styles.AddTodoText} placeholder='Add a TodoListName...'/>
-                <button onClick={() => {addTodoList()}} style={Styles.AddTodoButton}>+</button>
+                <button onKeyPress={(e) => {handleKeyPress(e)}} onClick={() => {addTodoList()}} style={Styles.AddTodoButton}>+</button>
             </div>
   )
 }
