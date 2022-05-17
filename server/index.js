@@ -155,6 +155,13 @@ app.put('/todo', isLoggedIn, function(req,res){
     })
 })
 
+app.delete('/todo/:id', isLoggedIn, function(req,res){
+    const id = req.params.id;
+    Todo.findByIdAndDelete(id, function(error){
+        if(error) res.status(404).send("todo not found");
+        else res.status(200).send({"status":"todo deleted successfully"});
+    })
+})
 
 if(process.env.NODE_ENV === 'production'){
     const __dirname = path.resolve();

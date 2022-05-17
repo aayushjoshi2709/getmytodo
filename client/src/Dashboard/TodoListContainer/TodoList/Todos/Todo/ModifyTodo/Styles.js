@@ -13,10 +13,11 @@ const Styles = {
         color: '#1C427E'
     },
     TextArea:{
-        width:'345px',
+        width:'340px',
         height:'100px',
         outline:'none',
-        resize: 'none'
+        resize: 'none',
+        padding:'4px'
     },
     Button:{
         backgroundColor: 'transparent',

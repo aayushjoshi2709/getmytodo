@@ -1,8 +1,7 @@
 const Styles = {
     TodoListContainer:{
         padding:'30px',
-        width: 'calc(100% - 60px)',
-        minHeight: 'calc(100vh - 120px)',
+        width: 'calc(100% - 60px)'
     },
     AddTodoList:{
         position:'fixed',

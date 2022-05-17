@@ -1,12 +1,31 @@
 import React, { useState } from "react";
 import Styles from "./Styles";
 import axios from "axios";
-function ModifyTodo({ todo, setGetTodos, setModifyTodos, setShowBlueScreen }) {
-  function DeleteTodo() {
 
+function ModifyTodo({ todo, setGetTodos, setModifyTodos, setShowBlueScreen }) {
+  const [ChangedDesc, setChangedDesc] = useState(todo.detail)
+  function DeleteTodo() {
+    axios.delete(`/todo/${todo._id}`,{withCredentials:true}).then((res) =>{
+      if(res.status === 200){
+        setGetTodos(true);
+        setModifyTodos(false);
+        setShowBlueScreen(false);
+      }
+    });
   }
-  function postUpdate(){
-    
+  function postUpdate() {
+    if(ChangedDesc.length > 0){
+      let data = {
+        id: todo._id,
+        title: todo.title,
+        completed: todo.completed,
+        detail: ChangedDesc,
+        date:todo.date
+      };
+      axios.put("/todo", data, { withCredentials: true }).then((res) => {
+        if (res.status == 200) setGetTodos(true);
+      });
+    }
   }
   return (
     <div style={Styles.AddTodoListDiv}>
@@ -21,6 +40,7 @@ function ModifyTodo({ todo, setGetTodos, setModifyTodos, setShowBlueScreen }) {
         </button>
         <button
           onClick={() => {
+            postUpdate();
             setModifyTodos(false);
             setShowBlueScreen(false);
           }}
@@ -31,8 +51,8 @@ function ModifyTodo({ todo, setGetTodos, setModifyTodos, setShowBlueScreen }) {
       </div>
       <br></br>
       <div>
-        <p>{todo.title}</p>
-        <textarea style={Styles.TextArea}></textarea>
+        <p><b>{todo.title}</b></p>
+        <textarea value={ChangedDesc} onChange={(e)=> setChangedDesc(e.target.value)} style={Styles.TextArea} placeholder="Type here and click on the close button to save changes..."></textarea>
         <p>Add Date</p>
         <p>Move to Another List</p>
       </div>

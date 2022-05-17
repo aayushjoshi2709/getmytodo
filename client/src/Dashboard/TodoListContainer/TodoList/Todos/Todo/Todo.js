@@ -8,6 +8,8 @@ function Todo({ todo, setGetTodos, setShowBlueScreen }) {
       id: todo._id,
       title: todo.title,
       completed: !todo.completed,
+      detail: todo.detail,
+      date:todo.date
     };
     axios.put("/todo", data, { withCredentials: true }).then((res) => {
       if (res.status == 200) setGetTodos(true);
@@ -52,6 +54,7 @@ function Todo({ todo, setGetTodos, setShowBlueScreen }) {
           </button>:null
         }
       </div>
+      <p style={todo.completed ?Style.detailParaCompleted: Style.detailPara}>{todo.detail}</p>
     </>
   );
 }

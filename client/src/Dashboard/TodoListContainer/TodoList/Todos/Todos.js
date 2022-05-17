@@ -11,7 +11,7 @@ function Todos({ todos, setGetTodos, setShowBlueScreen }) {
       {todos !== undefined
         ? Object.keys(todos).map((keys, idx) => {
             return !todos[idx].completed ? (
-              <Todo
+              <Todo key={todos[idx]._id}
                 todo={todos[idx]}
                 setGetTodos={setGetTodos}
                 setShowBlueScreen={setShowBlueScreen}
@@ -27,7 +27,7 @@ function Todos({ todos, setGetTodos, setShowBlueScreen }) {
       {todos !== undefined
         ? Object.keys(todos).map((keys, idx) => {
             return todos[idx].completed ? (
-              <Todo
+              <Todo key={todos[idx]._id}
                 todo={todos[idx]}
                 setGetTodos={setGetTodos}
                 setShowBlueScreen={setShowBlueScreen}

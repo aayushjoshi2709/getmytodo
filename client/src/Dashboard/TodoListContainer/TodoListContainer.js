@@ -12,13 +12,13 @@ function TodoListContainer({TodoLists, setGetTodos}) {
             ShowBlueScreen? <div style={Styles.blue} onClick= {()=>{setShowAddTodoList(false); setShowBlueScreen(false)}}></div> :null        
         }
         {
-            ShowAddTodoList?<AddTodoList setGetTodos = {setGetTodos}/>:null
+            ShowAddTodoList?<AddTodoList setGetTodos = {setGetTodos} setShowBlueScreen={setShowBlueScreen} setShowAddTodoList= {setShowAddTodoList}/>:null
         }
         <div style={Styles.TodoListContainer}>
             {
               
               TodoLists !== undefined ?Object.keys(TodoLists).map((keys, idx) => {
-                return <TodoList todoList = {TodoLists[idx]} setGetTodos = {setGetTodos} setShowBlueScreen={setShowBlueScreen}/>
+                return <TodoList key={TodoLists[idx]._id} todoList = {TodoLists[idx]} setGetTodos = {setGetTodos} setShowBlueScreen={setShowBlueScreen} setShowAddTodoList= {setShowAddTodoList}/>
               }):''
             }  
         </div>
